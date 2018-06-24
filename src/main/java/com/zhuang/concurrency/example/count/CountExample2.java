@@ -1,4 +1,4 @@
-package com.zhuang.concurrency.example;
+package com.zhuang.concurrency.example.count;
 
 import com.zhuang.concurrency.annotations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 并发模拟
- * 线程不安全
  */
 @Slf4j
 @ThreadSafe
