@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
-public @interface TreadSafe {
+public @interface ThreadSafe {
     String value() default "";
 }
