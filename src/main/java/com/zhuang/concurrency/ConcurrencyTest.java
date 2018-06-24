@@ -1,6 +1,6 @@
 package com.zhuang.concurrency;
 
-import com.zhuang.concurrency.annotations.NotTreadSafe;
+import com.zhuang.concurrency.annotations.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 @Slf4j
-@NotTreadSafe
+@NotThreadSafe
 /**
  * 并发模拟
  * 线程不安全
