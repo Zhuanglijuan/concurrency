@@ -79,3 +79,9 @@
 		1. Ad-hoc线程封闭：程序控制实现，最糟糕，忽略
 		2. 堆栈封闭：局部变量，无并发问题
 		3. ThreadLocal线程封闭：特别好的封闭方法
+
+	3. 线程不安全的类与写法
+		1. StringBuilder -> StringBuffer
+		2. SimpleDateFormat -> JodaTime
+		3. ArrayList,HashSet,HashMap等Collections
+		4. 先检查再执行：if(condition(a)){handle(a);}
