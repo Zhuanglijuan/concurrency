@@ -90,3 +90,12 @@
 		1. ArrayList -> Vector,Stack
 		2. HashMap -> HashTable(key、value不能为null)
 		3. Collections.synchronizedXXX(List、Set、Map)
+
+	4. 线程安全-并发容器 J.U.C
+		1. ArrayList -> CopyOnWriteArrayList(适合读多写少的场景）
+		2. HashSet、TreeSet -> CopyOnWriteArraySet、ConcurrentSkipListSet
+		3. HashMap、TreeMap -> ConcurrentHashMap、ConCurrentSkipListMap(1. key是有序的。2、支持更高的并发。）
+
+	5. 安全共享对象策略 - 总结
+		1. 线程限制：一个被线程限制的对象，由线程独占，并且只能被占有它的线程修改
+		2. 共享只读：一个共享只读的对象，在没有额外同步的情况下，可以被多个线程并发访问，但任何线程都不能修改它
