@@ -57,3 +57,19 @@
 		2. 将对象引用保存到volatile类型域或者AtomicReference对象中
 		3. 将对象的引用保存到某个正确构造对象的final类型域中
 		4. 将对象的引用保存到一个由锁保护的域中
+
+4. 线程安全策略
+	1. 不可变对象
+		1. 不可变对象需要满足的条件
+			1. 对象创建以后其状态就不能修改
+			2. 对象所有域都是final类型
+			3. 对象是正确创建的(在对象创建期间，this引用没有逸出
+
+		2. final关键字：类、方法、变量
+
+			1. 修饰类：不能被继承
+			2. 修饰方法：1、锁定方法不被继承类修改；2、效率（注意：一个类的private方法会被隐式的被指定为final方法）
+			3. 修饰变量：基本数据类型变量、引用类型变量
+
+		3. Collections.unmodifiableXXX:Collection、List、Set、Map
+		4. Guava：ImmutableXXX：Collection、List、Set、Map
