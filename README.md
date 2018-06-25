@@ -85,3 +85,8 @@
 		2. SimpleDateFormat -> JodaTime
 		3. ArrayList,HashSet,HashMap等Collections
 		4. 先检查再执行：if(condition(a)){handle(a);}
+
+	3. 线程安全-同步容器
+		1. ArrayList -> Vector,Stack
+		2. HashMap -> HashTable(key、value不能为null)
+		3. Collections.synchronizedXXX(List、Set、Map)
