@@ -144,3 +144,40 @@
 		4. PriorityBlockingQueue：无边界带优先级的队列，允许插入null，所有插入此队列的对象必须实现Comparable接口。可以获得迭代器iterator，但是不保证按照优先级顺序进行迭代。
 		5. SynchronousQueue：仅容纳一个元素，当一个线程插入一个元素后就会被阻塞，除非这个元素被另一个线程消费，因此又称它为同步队列，一个无界非缓存队列即不存储元素，放入元素后只能等待取走元素后才能放入。
 		6. 小结：BlockingQueue不仅实现了队列所具有的基本功能，同时在多线程环境下还管理多线程间的自动等待、唤醒功能，从而使得开发者可以忽略这些细节，关注更高级的功能，
+
+7. 线程调度-线程池
+	1. new  Thread弊端
+		1. 每次new Thread新建对象，性能差
+		2. 线程缺乏统一管理，可能无限制的新建线程，相互竞争，有可能占用过多系统资源导致死机或OOM
+		3. 缺少更多功能，如更多执行、定期执行、线程中断
+
+	2. 线程池的好处
+		1. 重用存在的线程，减少对象创建、消亡的开销，性能佳
+		2. 可有效控制最大并发线程数，提高系统资源利用率，同时可以避免过多资源竞争，避免阻塞
+		3. 提供定时执行、定期执行、单线程、并发数控制等功能
+
+	2. ThreadPoolExecutor
+		1. corePoolSize：核心线程数量maximumPoolSize：线程最大线程数
+		2. workQueue：阻塞队列，存储等待执行的任务，很重要，会对线程池运行过程产生重大影响
+		3. keepAliveTime：线程没有任务执行时最多保持多久时间终止
+		4. unit：keepAliveTime的时间单位threadFactory：线程工厂，用来创建线程
+		5. rejectHandler：当拒绝处理任务时的策略
+		6. execute():提交任务，交给线程池执行
+		7. submit()：提交任务，能够够返回执行结果execute+Future
+		8. shutdown():关闭线程池，等待任务都执行完
+		9. shutdownNow():关闭线程池，不等待任务执行完
+		10. getTaskCount():线程池已执行和未执行的任务总数
+		11. getCompletedTaskCount():已完成的任务数量
+		12. getPoolSize():线程池当前的线程数量
+		13. getActiveCount():当前线程池中正在执行任务的线程数量
+
+	3. Executor框架接口
+		1. Executors.newCachedThreadPool
+		2. Executors.newFixedThreadPool
+		3. Executors.newScheduledThreadPool
+		4. Executors.newSingleThreadExecutor
+
+	4. 线程池-合理配置
+		1. CPU密集型任务，就需要尽量压榨CPU，参考值可以设为NCPU+1
+		2. IO密集型任务，参考值可以设置为2*NCPU
+		
