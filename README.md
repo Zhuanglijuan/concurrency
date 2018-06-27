@@ -181,3 +181,32 @@
 		1. CPU密集型任务，就需要尽量压榨CPU，参考值可以设为NCPU+1
 		2. IO密集型任务，参考值可以设置为2*NCPU
 		
+8. 多线程并发扩展
+	1. 死锁-必要条件
+		1. 互斥条件：进程对所分配到的资源不允许其他进程进行访问，若其他进程访问该资源，只能等待，直至占有该资源的进程使用完成后释放该资源
+
+		2. 请求和保持条件：进程获得一定的资源之后，又对其他资源发出请求，但是该资源可能被其他进程占有，此事请求阻塞，但又对自己获得的资源保持不放
+
+		3. 不可剥夺条件：是指进程已获得的资源，在未完成使用之前，不可被剥夺，只能在使用完后自己释放
+		
+		4. 环路等待条件：是指进程发生死锁后，必然存在一个进程--资源之间的环形链
+
+	2. 多线程并发最佳实践
+		1. 使用本地变量：应该总是使用本地变量，而不是创建一个类或实例变量，通常情况下，开发人员使用对象实例作为变量可以节省内存并可以重用，因为他们认为每次在方法中创建本地变量会消耗很多内存。
+		2. 使用不可变类：不可变类比如String Integer等一旦创建，不再改变，不可变类可以降低代码中需要的同步数量。
+
+
+		3. 最小化锁的作用域范围：S=1/(1-a+a/n)：任何在锁中的代码将不能被并发执行，如果你有5%代码在锁中，那么根据Amdahl's law，你的应用形象就不可能提高超过20倍，因为锁中这些代码只能顺序执行，降低锁的涵括范围，上锁和解锁之间的代码越少越好。
+		4. 使用线程池的Executor，而不是直接new Thread：创建一个线程的代价是昂贵的，如果你要得到一个可伸缩的Java应用，你需要使用线程池，使用线程池管理线程。JDK提供了各种ThreadPool线程池和Executor。
+		5. 宁可使用同步而不要使用线程的wait notify：从Java 1.5以后增加了需要同步工具如CycicBariier, CountDownLatch 和 Sempahore，你应当优先使用这些同步工具，而不是去思考如何使用线程的wait和notify，通过BlockingQueue实现生产-消费的设计比使用线程的wait和notify要好得多，也可以使用CountDownLatch实现多个线程的等待
+		6. 使用BlockingQueue实现生产-消费模式：大部分并发问题都可以使用producer-consumer生产-消费设计实现，而BlockingQueue是最好的实现方式，堵塞的队列不只是可以处理单个生产单个消费，也可以处理多个生产和消费。
+		7. 使用并发集合Collection而不是加了同步锁的集合：Java提供了 ConcurrentHashMap CopyOnWriteArrayList 和 CopyOnWriteArraySet以及BlockingQueue Deque and BlockingDeque五大并发集合，宁可使用这些集合，也不用使用Collections.synchronizedList之类加了同步锁的集合， CopyOnWriteArrayList 适合主要读很少写的场合，ConcurrentHashMap更是经常使用的并发集合
+		8. 使用Semaphore创建有界：为了建立可靠的稳定的系统，对于数据库 文件系统和socket等资源必须有界bound，Semaphore是一个可以限制这些资源开销的选择，如果某个资源不可以，使用Semaphore可以最低代价堵塞线程等待。
+		9. 宁可使用同步代码块，也不使用加同步的方法：使用synchronized 同步代码块只会锁定一个对象，而不会将当前整个方法锁定；如果更改共同的变量或类的字段，首先选择原子性变量，然后使用volatile。如果你需要互斥锁，可以考虑使用ReentrantLock 
+		10. 避免使用静态变量：静态变量在并发执行环境会制造很多问题，如果你必须使用静态变量，让它称为final 常量，如果用来保存集合Collection，那么考虑使用只读集合。
+		11. 宁可使用锁，而不是synchronized 同步关键字：Lock锁接口是非常强大，粒度比较细，对于读写操作有不同的锁，这样能够容易扩展伸缩，而synchronized不会自动释放锁，如果你使用lock()上锁，你可以使用unlock解锁。
+
+	3. Spring与线程安全
+		1. Spring bean：singleton、prototype
+		2. 无状态对象
+		
