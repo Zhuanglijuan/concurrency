@@ -209,4 +209,13 @@
 	3. Spring与线程安全
 		1. Spring bean：singleton、prototype
 		2. 无状态对象
+
+9. 高并发之扩容思路
+	1. 垂直扩容（纵向扩展）：提高系统部件能力
+	2. 水平扩容（横向扩展）：增加更多系统成员来实现
+	3. 扩容-数据库
+		1. 读操作扩容：memcache、Redis、CDN等缓存
+		2. 写操作扩展：Cassandra、Hbase等
+
+
 		
